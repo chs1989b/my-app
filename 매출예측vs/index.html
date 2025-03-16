@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이틀치 매출 평균 계산</title>
+    <script>
+        async function calculateAverage() {
+            let sales1 = document.getElementById("sales1").value;
+            let sales2 = document.getElementById("sales2").value;
+
+            let response = await fetch("/calculate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ sales1: sales1, sales2: sales2 })
+            });
+
+            let result = await response.json();
+            document.getElementById("result").innerText = "이틀 평균 매출: " + result.average;
+        }
+    </script>
+</head>
+<body>
+    <h2>이틀치 매출을 입력하세요</h2>
+    <input type="number" id="sales1" placeholder="첫째 날 매출">
+    <input type="number" id="sales2" placeholder="둘째 날 매출">
+    <button onclick="calculateAverage()">계산하기</button>
+    <h3 id="result"></h3>
+</body>
+</html>
